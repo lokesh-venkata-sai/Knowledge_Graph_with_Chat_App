@@ -51,5 +51,12 @@ Ollama makes it easy to host any model locally. The Mistral 7B OpenOrca version 
    - npm start
 
 ## Techstack:
-1. Python
+1. Python - Pyvis, Networkx, Ollama, Pytorch, Transformers
 2. React
+3. Postman - Tool to test APIs
+
+Sample Visualization
+![alt text](image.png)
+
+Sample Graph Visualization
+![alt text](image-1.png)

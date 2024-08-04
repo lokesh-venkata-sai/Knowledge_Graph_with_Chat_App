@@ -1,0 +1,82 @@
+URL: https://www.eejournal.com/article/intel-plans-to-spin-off-fpga-group-as-an-independent-company-nine-years-after-buying-altera/
+
+Intel plans to spin off FPGA group as an independent company nine years after buying Altera – EEJournal
+Search for:
+Search
+Menu
+Articles
+News
+Fish Fry
+Chalk Talks
+Blogs
+Categories
+Category List
+Media Kit
+Skip to content
+feature article
+October 4, 2023
+Intel plans to spin off FPGA group as an independent company nine years after buying Altera
+by Steven Leibson
+On October 3, CEO Pat Gelsinger announced Intel’s plan to spin out the company’s Programmable Solutions Group (PSG) – the group that was once known as independent FPGA maker Altera – into an independently operated company. Gelsinger’s explanation for why Intel is spinning PSG back out into an independent company is that he’s unlocking shareholder value. He said that PSG had underperformed under Intel’s management and needed more management attention than it was getting from Intel corporate. The spun-out FPGA company will recover the independence it needs to compete in the FPGA arena. If the stock market’s initial favorable reaction on the day after the announcement is any indication, the consensus seems to be that this plan is a good move and may be a good financial bet for Intel.
+This move marks the end of Intel’s latest 9-year experiment with making and selling FPGAs. Altera had announced its plan to switch semiconductor foundries from TSMC to Intel in 2013. (See “Altera to Build Next-Generation, High-Performance FPGAs on Intel’s 14nm Tri-Gate Technology.”) Then, three years later, Intel announced plans to buy FPGA maker Altera and completed the acquisition late in 2015. Altera became Intel PSG after the acquisition.
+Back in 2015, EEJournal’s Kevin Morris wrote:
+“Looking at the impact of the Intel/Altera deal, then, one of the first things we hear is ‘Margin stacking!’ Since Xilinx has to pay TSMC for chips, and then add their own margin to the price, there are two companies worth of margins in Xilinx’s prices. But if Altera and Intel become one company, they don’t have two companies’ worth of margins to deal with. They could drop prices!
+“This margin stacking argument doesn’t seem to hold much water on closer examination, though. Margins are sacred in semiconductors, and nobody is likely to go willy-nilly cutting margins on one of the most lucrative technologies in semiconductors – especially not margin-savvy Intel. And, if you view the “fab” part of Intel and the new ‘Altera’ part of Intel as two different organizations that both have to earn their keep (which they are), you really are still looking at the same situation on margins that Xilinx and TSMC face. Putting both operations in the hands of the same group of shareholders doesn’t really change what each piece needs to do to make a profit.” (See “After Intel and Altera.”)
+The technological side of this Intel/Altera marriage was rocky at first. Altera/PSG initially had trouble taping out Arria 10 FPGAs in Intel’s 20nm FinFET node, but the next-generation Stratix 10 FPGAs fared much better at the 14nm node, while pathfinding Intel’s early heterogeneous chiplet technologies and strategies, including the use of the embedded multi-die interconnect bridge (EMIB) and the Advanced Interface Bus (AIB). From there, Intel PSG jumped to the successful Agilex FPGA families, initially made with Intel’s 10nm process technology. Lately, Intel PSG has been expanding the Agilex FPGA family portfolio and seems to plan on stretching the Agilex FPGA architecture from low-end Agilex 3 FPGAs to stratospheric DirectRF Agilex 9 FPGAs. (See “Intel Takes Control of Communications Hill with Analog-Enabled FPGA Portfolio.”)
+So, technologically, Intel’s acquisition of Altera eventually became a win. However the marketing side has been a different story. Intel was founded as a semiconductor memory company that incidentally introduced the industry’s first commercial microprocessor, the Intel 4004. (See “Which Was The First Microprocessor?”) It’s hard to remember, but Intel was once king of the DRAMs. The company invented commercial DRAMs, and its DRAM business brought in so much revenue that Intel founders Gordon Moore and Andy Grove were quite skeptical of the microprocessor’s importance to the company. However, the Intel 8088 microprocessor’s success in the IBM PC market coupled with fierce Japanese competition in the DRAM arena caused Moore and Grove to pivot in 1985. That year, Intel dumped its DRAM business and became the microprocessor company we know today. Over the years, Intel has had trouble acquiring and growing businesses that aren’t directly related to microprocessors.
+For example, the company acquired security software maker McAffee in 2014 and sold it via a private buyout seven years later. Intel agreed to acquire autonomous driving specialist Mobileye in 2017 and spun the company back out in an IPO in 2022. Similarly, Intel plans to spin out PSG as a wholly owned and independent company on January 1, 2024, then to add an investment partner to the deal “fairly rapidly,” and to conduct an IPO for the new FPGA company within two or three years.
+During the October 3 announcement, Gelsinger announced that Sandra Rivera would be the new company’s CEO, and Shannon Poulin, currently a corporate VP and General Manager of Intel PSG, will become the company’s new COO. Rivera has been managing Intel’s DCAI (Data Center and AI) group for years, and PSG was part of her domain. At Intel, Rivera is the executive vice president and general manager of the DCAI Group and PSG’s CEO working under Intel’s overall CEO, Gelsinger. In the new company, she’ll run her own show, and Intel will become a major investor. Rivera said that as CEO of the new FPGA company, she’ll be looking for growth, higher profits, alternative sales channels, and the ability to create derivative FPGAs more quickly using Intel’s chiplet technologies and manufacturing might. As an independent company, Intel PSG (New Altera?) can focus exclusively on FPGA development, FPGA applications, FPGA marketing, FPGA customers, and FPGA-friendly sales channels. As a group within Intel, PSG really could not do any of these things with unfettered freedom.
+For Intel PSG, the return to operational independence may be a welcome breath of fresh air. Intel continued to operate as a microprocessor company after acquiring Altera in 2015. From a revenue perspective, FPGAs represent a small portion of Intel’s sales and get little corporate marketing attention. Intel’s Xeon server processors pull in the big bucks, and the company’s marketing reflects that. Nearly everything that Intel offers is framed as a Xeon helper. While FPGAs make excellent companions to microprocessors, they also play a major standalone role in many embedded systems. Intel’s SOC variants of its FPGAs sport multiple Arm cores, which are quite capable of running many systems without help from an X86 microprocessor. However, those sorts of embedded applications in aerospace, military, industrial, and automotive markets don’t dovetail well with Intel’s intense marketing focus on data center, PC, and X86 microprocessor stories.
+The spinout of Intel PSG is not the first time that Intel has exited the programmable logic business. Semiconductor historians will remember that, way back in the late 1980s, in the very dim mists of programmable-logic history, Intel had an EPLD (erasable programmable logic device) business that they eventually sold to Altera to focus more on microprocessors. Fast forward three decades or so, and Intel is still intertwined with Altera, now garbed as Intel PSG, but the company still prefers to focus on microprocessors. (What a surprise!)
+Nearly everyone seems to win in this spinout. Intel wins by exposing more shareholder value and immediately gaining a new external customer for Intel Foundry Services (IFS). Whether or not this move gives IFS a little more street cred remains to be seen. Meanwhile, PSG (soon to be New Altera?) wins back the independence it needs to compete in the FPGA arena and retains the manufacturing might of IFS, which Gelsinger is currently supercharging with oodles of cash from multiple sources. FPGA customers get a strong competitor back in the fight to keep the other FPGA players in check. The only losers might be Lattice and Microchip, which used the distracting influence of Intel corporate marketing’s narrow Xeon-centric focus to gain some FPGA market share in the low-end and mid-range segments.
+Note: Many thanks to Robert Bielby for helping me to remember Intel’s first foray into programmable logic.
+Related
+Tweet
+6 thoughts on “Intel plans to spin off FPGA group as an independent company nine years after buying Altera”
+Max Maxfield says:
+October 4, 2023 at 1:21 pm
+O-M-G!
+WTW? (“What the What?)
+I’m gobsmacked. I’m flabbergasted (rarely has my flabber been so gasted!)
+Log in to Reply
+Max Maxfield says:
+October 4, 2023 at 1:22 pm
+Hang on…
+#1 Intel buys Altera
+#2 AMD buys Xilinx
+#3 Intel spins off the Programmable Systems Group (Altera)
+#4 …?…
+Log in to Reply
+Steven Leibson says:
+October 4, 2023 at 5:45 pm
+Yes, there’s an implied progression, isn’t there Max? However, AMD got rid of its fabs long ago and has extracted some AI DNA from the FPGA side of the house for its processors, so the two situations aren’t exact mirrors. Also, the reasons that Intel bought Altera and the reasons that AMD bought Xilinx don’t align all that well, it just appears that they do. Let that smack your gob. (I first heard the term “gobsmacked” in the first Johnny English movie.)
+Log in to Reply
+Max Maxfield says:
+October 5, 2023 at 6:06 am
+I saw a software developer’s interpretation of the Intel-Altera-AMD-Xilinx on LinkedIn that made me smile:
+Intel += Altera;
+AMD += Xilinx;
+Intel -= Altera;
+:
+:
+LOL
+Log in to Reply
+Steven Leibson says:
+October 5, 2023 at 8:22 am
+I C.
+Log in to Reply
+Pingback: 曾经的Altera，能否重返巅峰？ - 中國新聞
+Leave a Reply Cancel replyYou must be logged in to post a comment.
+featured blogs
+BigZaphod Meets Beethoven Meets Vivaldi Meets RushAug 2, 2024In which an innocent quest in search of an electronic video leads to an unexpected plunge into a musical rabbit hole....More from Max's Cool Beans...
+featured video How NV5, NVIDIA, and Cadence Collaboration Optimizes Data Center Efficiency, Performance, and ReliabilitySponsored by Cadence Design SystemsDeploying data centers with AI high-density workloads and ensuring they are capable for anticipated power trends requires insight.
+Creating a digital twin using the Cadence Reality Digital Twin Platform helped plan the deployment of current workloads and future-proof the investment. Learn about the collaboration between NV5, NVIDIA, and Cadence to optimize data center efficiency, performance, and reliability. Click here for more information about Cadence Data Center Solutions
+featured chalk talk
+PolarFire® SoC FPGAs: Integrate Linux® in Your Edge NodesSponsored by Mouser Electronics and MicrochipIn this episode of Chalk Talk, Amelia Dalton and Diptesh Nandi from Microchip examine the benefits of PolarFire SoC FPGAs for edge computing applications. They explore how the RISC-V-based Architecture, asymmetrical multi-processing, and Linux-based reference solutions make these SoC FPGAs a game changer for edge computing applications.Click here for more information about Microchip Technology MPFS250-VIDEO-KIT Polarfire® SoC FPGA Video Kit Feb 6, 202424,462 views
+All material on this site copyright © 2003 - 2024 techfocus media, inc. All rights reserved.
+Privacy Policy
+Media Kit
+Contact Us
+Log In
+Subscribe to EE Journal Daily
+×

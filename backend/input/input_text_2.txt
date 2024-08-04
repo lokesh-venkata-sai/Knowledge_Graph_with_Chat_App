@@ -1,0 +1,285 @@
+URL: https://news.ycombinator.com/item?id=37767831
+
+Intel to set its FPGA unit free to pursue its own path | Hacker News
+Hacker News
+new | past | comments | ask | show | jobs | submit
+login
+Intel to set its FPGA unit free to pursue its own path (nextplatform.com)
+148 points by rbanffy 10 months ago
+| hide | past | favorite | 82 comments
+mips_r4300i 10 months ago
+| next [–]
+Thank goodness. I've been expecting this ever since Intel bought Altera, they just stuck with it a couple years longer than I figured.They focused solely on the high end, but it turns out nobody really wants FPGA fabric on a CPU. You can already do acceleration over a PCI express link, and that's what you more often do with embedded applications where the CPU is acting more like a dispatch controller than doing the real work.Intel also have completely ignored the low end of the market. The only true lowend part they have is the Cyclone 10LP, which is literally the exact same part as the cyclone 3/4 from 2008. Just slightly die shrunk. No hard IP support like ddr3 controllers, no MIPI, nothing that people are getting from the competition now.Intel did realize this, which is why the new AgileX family includes some "low-mid range" parts, but they will be still much more expensive. Low-end to Intel means "under $1k unit cost" which ignores a huge part of the market.They have better tools, documentation, and support than Gowin, who is a recent Chinese FPGA upstart using stolen Lattice IP and hires. But they will lose to Gowin by default in the commodity space unless they do something.
+Tuna-Fish 10 months ago
+| parent | next [–]
+They did not ignore the low end by choice.The entire story of Altera inside Intel can be summarized as:Intel fabs make amazing promises about process performance and availability. Altera builds their product stack on that. In the end, the fabs fail to deliver either performance, or sufficient amount of manufacturing capability. Now Altera has to pick which products they want to ship. They obviously can the low end. Even the high end that ships is horribly late, because of manufacturing issues.There would have been massive demand for the combined Intel+Altera products. Many large customers built their future based on the marketing promises Intel made, and when they couldn't deliver, those customers had to redevelop everything on something else. As an example, look up Nokia Reefshark.
+oscillonoscope 10 months ago
+| root | parent | next [–]
+I've had Intel sales people tell me that the entire low end of some their marketed FPGA/ASIC products have never and likely will never be sold
+yarg 10 months ago
+| root | parent | prev | next [–]
+Any use at NVidia for that tech?
+If the biggest problem is process, Altera should be shopping around for a company with an in on manufacturing at TSMC.
+(I doubt AMD's an option, since they already subsumed Xilinx.)
+eqvinox 10 months ago
+| root | parent | prev | next [–]
+Do you have some citable sources for this?
+It sounds like it might very well be true, but, well, …
+re-thc 10 months ago
+| root | parent | next [–]
+It was widely reported, e.g. https://www.semiaccurate.com/2019/09/23/altera-releases-stra...
+rthomas6 10 months ago
+| parent | prev | next [–]
+> nobody really wants FPGA fabric on a CPU.Not true... Xilinx sells a lot of their Zynq, MPSoC, and RFSoC chips. Though I guess those are more CPU on an FPGA.
+tonyarkles 10 months ago
+| root | parent | next [–]
+Intel doesn’t really make low end CPUs like that though. The Zynq is an awesome little chip and there really isn’t anything on the market to compare it to as far as I know. From my perspective sitting on the sidelines of this industry, Intel went all-in assuming companies would want FPGAs in the data centre the same way they want GPUs in the data centre and that bet didn’t pan out.
+mikepavone 10 months ago
+| root | parent | next [–]
+Intel does have the Cyclone 5 SoC which integrates Cortex-A9 cores much like the Zynq 7000 series. That product predates the acquisition though and they don't seem to have released anything to compete with newer entries in the Zynq lineup
+rwmj 10 months ago
+| root | parent | next [–]
+But the bet was customers would buy Xeons with an FPGA block that would "do magic".
+What magic it would do and how you'd program it in a sane way was never specified in great detail.
+In any case for those that really want this it turns out you can put the FPGA on the end of a regular PCIe link and get all the same benefits.Edit: By the way there is some niche research of the FPGA in core (which don't work if the FPGA is over PCIe).
+This paper describes a way to rearrange memory using a programmable FPGA-based memory controller to optimize database table accesses: https://arxiv.org/pdf/2109.14349.pdf
+sitkack 10 months ago
+| root | parent | next [–]
+Intel suffers from the build it and they will come flaw of engineering.I want multiple FPGAs in the CPU. Replace the PMU with an FPGA, replace the MMU with an FPGA, and by replace I mean augment and extend. Of course an FPGA can't do all the work of fixed blocks.The ultimate problem is politics inside organizations and the lack of any sort of concrete creative thinking.That Intel isn't incorporating Altera into IFS and allowing IFS customers to include FPGA fabric into their designs is predictable but both astonishing.x86 and Altera as library IP only available on IFS would give them another 10 years of runway.Intel had the same market segmentation and lack of imagination in how they applied Optane. Heck, Optane should have had FPGA fabric in each dimm.
+It appears that each sub-sku has their own fiefdom and their own P&L that ignores ecosystem effects.Intel needs to be cleaned out.
+glitchc 10 months ago
+| root | parent | prev | next [–]
+Sounds like intel is mismanaged.
+ethbr1 10 months ago
+| root | parent | next [–]
+It certainly was. It remains to be seen if it is.If they'd been made a performant (as in, non-x86) low-end CPU, then they wouldn't have lost mobile and be competing with ARM now.Intel of the past few decades learned the wrong lesson from their history. You can climb the value chain to riches, but once you're at the top you still need to seed the earth for the next generation of profits. And that means cheap entry points and volume.
+sitkack 10 months ago
+| root | parent | next [–]
+The low end always eats the high end, always. Intel sold StrongARM to Marvell and that is some of the Arm IP they are fighting against in hyperscaler space.https://www.theregister.com/2006/06/27/intel_sells_xscale/https://www.networkworld.com/article/3574013/marvell-exits-t...
+numpad0 10 months ago
+| root | parent | prev | next [–]
+Words of mouth I’ve seen on this was that the whole FPGA craze was a war on 5G tower equipment, which AMD/Xilinx took all, and Altera is now a dead weight on Intel.
+AtlasBarfed 10 months ago
+| root | parent | prev | next [–]
+Pretty sure the emulator community would be pretty psyched about a consumer priced fpga.
+hobo_mark 10 months ago
+| parent | prev | next [–]
+> They have better tools, documentation, and support than Gowin, who is a recent Chinese FPGA upstart using stolen Lattice IP and hires.Naive of me to ask, but how are they allowed to sell anywhere outside of China?
+sitkack 10 months ago
+| root | parent | next [–]
+> stolen Lattice IP and hiresIf this is true, then the bitstream for Gowin and Lattice parts would be similar and both are being actively reverse engineered to be supported by OSS tools.It would be nice to see more evidence of this.
+padf 10 months ago
+| root | parent | next [–]
+I don't think there is any evidence of this. Open Source tools fully support Lattice (low end) FPGAs, and support for Gowin FPGAs is not quite as mature.
+It seems that many of the initial FPGA patents have expired, and that's why many small FPGA vendors are appearing. Please correct me if I am wrong.
+sitkack 10 months ago
+| root | parent | next [–]
+I agree. IP theft is a bold claim, that is why I was asking for more citations.Not only are the patent expired, but there are three projects that generate FPGA fabrics programmatically. FPGAs are extremely easy to construct as they are a repeating lattice.
+trsohmers 10 months ago
+| parent | prev | next [–]
+They have announced the new Agilex 3 line, which should include some CPLD price point parts and be a real rebirth for ~$100/unit modern devices.
+bfrog 10 months ago
+| root | parent | next [–]
+Lets see I guess... I'm not holding my breath, but it'd be great to not use Vivado's slow ass Java IDE one day. Quartus is light years faster seemingly.
+andrepd 10 months ago
+| parent | prev | next [–]
+What is even a "low-end" application of FPGAs, if you don't mind my asking?
+seren 10 months ago
+| root | parent | next [–]
+Some embedded stuff where the FPGA is used to implement some logic on I/Os, some processing that needs to be fast or implement some i2c, CAN, SPI controller trough IP core. Basically a more flexible way than having different chips on the board.
+almatabata 10 months ago
+| prev | next [–]
+Damn i hoped we would one day get a customizable fpga into our CPUs. I hoped that it would make sense to install certain instructions on your fpga depending on your workloads. I guess this either kills that possibility or pushes it into a very far future.I do not understand this part though:> There was talk of hybrid CPU-FPGA packages, which never seem to get
+> commercialized because no system architect likes static ratios of compute –
+> unless they are determining the ratios. Like the hyperscalers and cloud
+> builders, who can tell companies like Intel and AMD what their product
+> roadmaps need to look like.What do not see what they mean by ratio here. Do they mean die ratio between cpu and fpga?
+tverbeure 10 months ago
+| parent | next [–]
+> I hoped that it would make sense to install certain instructions on your fpga depending on your workloads.It's one of those things that seem like a good idea, but they just don't work out in practice. FPGA LUTs are just way too slow. You'd have to find a case where doing something on a 3GHz CPU clock running multiple instruction parallel gets outperformed by LUTs that runs at 700MHz (at best). And when you cascade the LUTs, they become slower too.And that's without solving the problem of closely coupling a CPU pipeline with FPGA logic.> What do not see what they mean by ratio here. Do they mean die ratio between cpu and fpga?What they mean is: in something like the Zynq FPGA family, I want a die with 2 CPU cores and 5000K LUTs. The other guy wants 8 CPU cores and 2000K LUTs. It works for narrow applications like signal processing where power efficiency and cost isn't a top concern, but for a hyperscaler, power consumption is a very important metric. As is the cost of paying for a significant part of the silicon die that's sitting there unused.
+duskwuff 10 months ago
+| root | parent | next [–]
+> It's one of those things that seem like a good idea, but they just don't work out in practice.GPGPU sucks a lot of air out of the room as well. There aren't many purely computational problems which FPGAs can solve better than a compute-optimized GPU; even though GPUs aren't quite as flexible, they clock a lot faster, they're cheaper, and they're easier to develop for.
+rowanG077 10 months ago
+| root | parent | next [–]
+I actually think there are a ton of problems which could benefit. But there is just very little mindshare. You basically have 1000x the people working on building software to run efficiently on the GPU. No way FPGA touches that. In addition it's a specialized set of skills to build high performance circuits. Whereas running on a GPU is "just" software.So even though I think FPGA could win out from an efficiency perspective for some problems there is just not enough people/companies working on it to win out. It also doesn't help the tools are raging proprietary garbage fires.
+ethbr1 10 months ago
+| root | parent | next [–]
+That's been a historically really good bet for processor architectures -- developer volume beats hypothetical performance.Essentially the only time it's gone the other way was when there was a toehold in a critical market, where the benefits were so obvious and profitable that they made up for the difficulty (e.g. graphics).
+KirillPanov 10 months ago
+| root | parent | prev | next [–]
+> where doing something on a 3GHz CPU clock running multiple instruction parallel gets outperformed by LUTs that runs at 700MHzEasy: go wide.Make the FPGA-CPU interface four times wider on the FPGA side than the CPU side.
+Each tick of the CPU clock reads (or writes) one quarter of the bits.
+mikewarot 10 months ago
+| root | parent | prev | next [–]
+The right kind of sea of LUTs can outperform anything even if it's clocked at 100 Mhz... the trick is to get a pipeline filled, instead of trying to outrun light.Imagine an LLM with a new token every 10 nS
+jeffreygoesto 10 months ago
+| root | parent | next [–]
+It is a totally different way of programming and thinking though and you need to spend a lot of thought on design to make it really fast. We could outpace a 3GHz CPU with a Zynq for image processing but it needs some really good FPGA people and the right split between CPU and FPGA. Nothing the average programmer wants to dive into, more something for cost and power sensitive markets with a relative fixed task, not needing ASICs yet. For networks it could pay off if you have the right amountof multipliers in the right places, but only then. As you wrote, don't leave the chip during the processing and you are good to go.
+coryrc 10 months ago
+| root | parent | prev | next [–]
+But you can't fit that "sea" into a processor core as a separate unit powered by unique instructions (like an FPU or ALU) because the speed demands the cache and ALU be there (or else it can't run at 3GHz any more). Once it's not that close it doesn't make sense to be on the same chip; maybe a neighboring chiplet. But anybody could do that.
+j_not_j 10 months ago
+| root | parent | prev | next [–]
+> FPGA LUTs are just way too slowIf, and of course that is a big if, you can repackage a (parallelizable) calculation into FPGA look-up tables and implement multiples of this (e.g. 8 to 80 times) then you can think maybe it's quicker than CPU at 3GHz.However, you have to include DMA of the data to and fro.
+It's unlikely to be worth the very extensive effort of integrating two wildly different technologies.On the other hand, it may not be a complicated calculation but FPGA can do much lower latency and smaller variance in latency (hello high-frequency traders).
+That is a very narrow niche.A simple board with CPU and FPGA is the Arduino MKR Vidor 4000: ARM Cortex 32-bit CPU and Intel Cyclone 10 FPGA).
+Hardware cost: $85.
+Full suite of development software $1000 or more (although lesser tools are available for free.)
+imtringued 10 months ago
+| root | parent | next [–]
+>However, you have to include DMA of the data to and fro. It's unlikely to be worth the very extensive effort of integrating two wildly different technologies.That is exactly the part where having the FPGA next to the CPU helps... You can transparently access the CPU cache via an AXI slave port on the CPU on AMD's MPSoCs at a rate of up to 16 bytes per cycle and you get multiple of those.
+andrepd 10 months ago
+| root | parent | next [–]
+Hmm, very interesting! Didn't know that wa possible.
+almatabata 10 months ago
+| root | parent | prev | next [–]
+Thanks for clarifying.
+throwaway4590 10 months ago
+| parent | prev | next [–]
+Whenever I see talk about Intel's FPGA unit, I link back to an invention I submitted to Intel while I was an intern there [0]. I went through the patent pipeline, but to my knowledge they never did anything with it. This was during the excitement of Intel's original acquisition of Altera.In fairness, I never mocked up a true enough implementation in Verilog to get an idea of real world speedup, and even now, I'm not sure exactly what operations you could see real gain with from small reconfigurable fabrics near the CPU. Still, I liked the elegance of having L1-L3+ FPGA's for speeding up operations of increasing levels of complexity, and I figured programmers smarter than me would find creative ways of using the FPGA's with the added instructions.[0] https://patents.google.com/patent/US10310868B2/
+almatabata 10 months ago
+| root | parent | next [–]
+Thanks for sharing. Small question about Image 20, does that represent a use case for an instruction translator? For example you have an arm chip and you want to run x86 code so you offload the x86 instructions to the fpga?
+throwaway4590 10 months ago
+| root | parent | next [–]
+I believe my contributions start at Image 25 on Google. Images 1-24 are generic CPU boilerplate images that the lawyers add to most patents in the field.
+hobs 10 months ago
+| root | parent | prev | next [–]
+Isn't it silly to link a throwaway account to a patent you invented? :)
+throwaway4590 10 months ago
+| root | parent | next [–]
+A bit unorthodox to have a public throwaway and an anonymous-ish main account, I suppose ;)
+rowanG077 10 months ago
+| root | parent | prev | next [–]
+I mean. If you, the original author, didn't even bother implementing and testing the idea why would you expect someone else would? I personally wouldn't touch such a project with a thousand foot pole.
+throwaway4590 10 months ago
+| root | parent | next [–]
+Having worked in both software and hardware, I understand and appreciate this sentiment in software.But most software engineers don't understand the amount of time and compute that would be required to mock up a novel, yet sufficiently complex as to be realistic, CPU. I did indeed have a basic HDL implementation, as is required for most patents in the US (reduction to practice). But to implement it fully enough to understand what kind of performance changes you could get in a modern CPU... it's safe to estimate it as an order of magnitude harder than the most complex pure software project you've ever built alone, and well beyond the resources of an intern who's just doing this in his spare time. Software is a great gig, because it's easy and you can do it all on your laptop.And I'm sure computer engineers like myself don't appreciate the difficulty of manufacturing true mechanical hardware at companies like Tesla, where a team and a budget would be even more essential to build anything useful.Anyway, the technical committee thought it was worth patenting, and the idea itself is pretty digestible without it working on production silicon, but I have no idea who comes up with product roadmaps at Intel. It was probably buried in the patent graveyard, or maybe someone qualified actually looked at it and realized it wouldn't work.
+rowanG077 10 months ago
+| root | parent | next [–]
+I'm actually a hardware engineer. I disagree that such a thing is only important in Software. You can easily validate any specific idea using cycle accurate simulators. If your intership didn't have enough time then fine. I would expect you continue working on the apparently golden idea your sitting. Nowadays you have a ton of pretty good softcores to choose from to test out an idea.If the original author of a patent didn't find it worthwhile to pursue the idea for whatever reason I have very little faith in the idea to begin with. Taken to the extreme it's like saying I can turn lead into gold, and then never actually showing you actually making money that way.
+throwaway4590 10 months ago
+| root | parent | next [–]
+> I'm actually a hardware engineer. <...> You can easily validate any specific idea using cycle accurate simulatorsIf anything, I'm less convinced than before that you understand how complex a modern CPU is. Perhaps you can re-read my comment; I essentially did what you are suggesting, but that wasn't enough, in my opinion, to glean any information about benchmarks in the real world. It took hundreds of hours. To make it slightly more realistic but still woefully inaccurate using licensable IP's and my own time/money without the company's buy-in seems absurd, even to the most stubborn HN commenter. The fact that we are modifying the L1/L2/L3 structure (perhaps you also didn't read the patent before commenting) makes this essentially re-designing large parts of the CPU from the ground up, at least as far as I understand licensable core IP.> I would expect you continue working on the apparently golden idea your sittingWhy? No one ever said it was the golden idea. Only that I found it interesting. Apologies if my optimistic curiosity triggered your defenses.Regardless, your statement makes no sense for other reasons. Perhaps there's a cultural gap (are you not American?). Here are some relevant points about US companies and patents I hope I can help you understand:1. Big US corporations will patent anything novel, technical, and remotely related to the business as a means of protecting themselves against litigation. Most of these patents only see an initial technical committee, lawyers, and then are never seen again.2. Inventors have zero individual rights to their patents when patented via company channels (in exchange, the company pays for the lawyers and usually grants a tiny stipend).3. Interns typically do not influence how research budgets are allocated.
+dralley 10 months ago
+| parent | prev | next [–]
+> Damn i hoped we would one day get a customizable fpga into our CPUs. I hoped that it would make sense to install certain instructions on your fpga depending on your workloads. I guess this either kills that possibility or pushes it into a very far future.Depends on what AMD does with Xilinx.
+gsmecher 10 months ago
+| root | parent | next [–]
+> Depends on what AMD does with Xilinx.Currently the AMD/Xilinx dynamic seems to reverse this: "Depends on what Xilinx does with AMD".AMD's software roadmap for AI/datacentre leans heavily on Vitis (for software) and AI Engines (as an execution platform). CPUs that integrate AI engines are already shipping (Ryzen AI). It's Xilinx technology, but you should expect it to look more like a GPU accelerator than a traditional LUTs-and-routing FPGA. And, as duskwuff have pointed out, this sucks a lot of the oxygen out of the CPU-with-FPGA design space.
+mathisfun123 10 months ago
+| root | parent | next [–]
+> AMD's software roadmap for AI/datacentre leans heavily on Vitis (for software) and AI Engines (as an execution platform).This is incorrect along all 3 dimensions:1. AMD has its own data-center class GPUs - I don't know how good they are because I don't work on them2. Vitis is just a brand and will be taken out of the equation before the end of the year.3. I don't know what execution platform means because AI Engine is one core in a grid of such cores on the chiplets that are on the Phoenix platform (shipped with new Ryzens) and the VCK boards.> It's Xilinx technology, but you should expect it to look more like a GPU accelerator than a traditional LUTs-and-routing FPGA.It is correct that there are no LUTs in the fabric but there are "switchboxes" for data traffic (between cores) and you do have do the routing yourself (or rely on the compiler).
+imtringued 10 months ago
+| root | parent | prev | next [–]
+I am actually surprised how AMD managed to successfully leverage it's FPGAs for machine learning inference. It is competing with Nvidia's Jetson.
+amluto 10 months ago
+| parent | prev | next [–]
+Integrating an FPGA with the actual front-end and register files seems so you can invoke it synchronously, with fast instructions at low latency, seems neat but rather complicated. As for an FPGA asynchronously accessing application memory, I tentatively expect CXL with some shared virtual memory trickery to succeed in this space, at least in a couple years when the dust hopefully settles, and then you can do whatever you want.
+bfrog 10 months ago
+| parent | prev | next [–]
+"a customizable fpga into our CPUs" that already happened, it just didn't happen in x86 land. There have been a good number of products from various vendors that connect up hard cores and fpga fabric.power pc cores, riscv cores, and by large arm cores
+tverbeure 10 months ago
+| root | parent | next [–]
+That's not what OP meant though. They were talking about custom CPU instructions implemented with FPGA logic.
+bfrog 10 months ago
+| root | parent | next [–]
+That doesn't sound that beneficial honestly
+eschneider 10 months ago
+| parent | prev | next [–]
+This doesn't make a lot of sense. I mean, there are SOCs out there with asymmetric cores (say, an ARM A53 and an ARM M4 on the same die) for folks who's workloads warrant that sorta thing. I'd expect there'd be s similar market for CPUs, with built in FPGAs of various sizes.
+tverbeure 10 months ago
+| root | parent | next [–]
+It only makes sense for a few applications. See the popular Xilinx Zynq UltraScale MPSoC product line. They are popular for digital signal processing, for example. But they are not power efficient, and they are very expensive.Good enough for a low volume custom solution for which custom silicon is too expensive. Not for a hyperscaler.
+brucethemoose2 10 months ago
+| prev | next [–]
+> We wouldn’t place heavy bets on Falcon Shores making it to completion unless a big HPC center adopts it, and given how Argonne National Laboratory was treated, we don’t think there will be a lot of uptake unless Intel makes some pretty big pricing concessions. Which it can ill afford. Hybrid CPU-GPU devices – the original plan for Falcon Shores, have also been shelved.That's even more eyebrow raising than an Altera spinoff.Altera is a good side business, but Falcon Shores is like Intel's consolidated future. If they just let that go... What do they expect? That everyone will just buy Xeon CPUs and IGP laptops forever?
+chx 10 months ago
+| parent | next [–]
+Look at https://benchmark.chaos.com/v5/vray?index=1&ordering=desc&by... Intel can ill afford to think about forever. They have a runway built by illegal monopoly tactics. What that runway ends, the music stops unless they do something very drastic to their CPUs right now. In the V-Ray 5 benchmark, the fastest 96 core AMD CPU alone is 30% faster than the fastest Intel offering, 120 cores in two sockets -- and that's not the fastest CPU AMD offers.This is not to say Intel will go bankrupt look at the number of quarters AMD spent in red but it really doesn't want to become #2.
+brucethemoose2 10 months ago
+| root | parent | next [–]
+And thats with a AMD duopoly where, frankly, AMD is happy to be anticompetitive here and there.A near future with more ARM/RISC-V is very different.
+SilverBirch 10 months ago
+| prev | next [–]
+Yeah it was really funny watching Intel buy Altera at the same time that they were spinning out McAfee and thinking “well we’ll see how long this lasts…”Big chunk of the team from Altera are at AMD now anyway.Hopefully they finally get back to innovating on the actual FPGA now. I’m so tired of the hardened rubbish and cpu integrated rubbish.
+aleph_minus_one 10 months ago
+| parent | next [–]
+> I’m so tired of the hardened rubbish and cpu integrated rubbish.Was there actually a way to access a CPU-integrated FPGA as an "ordinary" user/customer (i.e. not a "special customer")?
+the_pwner224 10 months ago
+| root | parent | next [–]
+Yes, the Zynq MPSoCs are widely available on Digikey, Mouser, etc. Both the bare chips as well as dev boards (Avnet ZedBoard, Trenz, and the Xilinx first party dev boards too). Even Versal is available, you can buy a VCK190 (albeit with a long lead time and it's over $10k) and Trenz has some much cheaper stuff which will be more generally available in the near future.
+SilverBirch 10 months ago
+| root | parent | prev | next [–]
+No, because they screwed up the tapeout of EMIB (they literally didn't even test it), and the value proposition was terrible - hey guys
+how do you fancy an Intel Xeon with some FPGA fabric on it - it's really exciting, all you do is you turn off a couple of your cores to reduce the CPU power consumption and then you can turn on 10k LUTs!
+thenobsta 10 months ago
+| prev | next [–]
+Every time I see an FPGA article, I feel a little sad that Tabula[1] didn't make it -- 1.6Ghz clock and reprogrammable on the fly. RIP.1. https://en.wikipedia.org/wiki/Tabula,_Inc.
+FullyFunctional 10 months ago
+| parent | next [–]
+I was a huge fan of the concept (time slicing LUTs).
+The name "Space-Time" actually made sense.
+Unfortunately, mapping designs to regular FPGA fabric is already hard and it apparently was too difficult for the Space-Time fabric and thus they folded.There are a lot of open FPGA efforts around.
+I hope someone else gives the idea another shot.While we are on exotic approaches, Achronix' first generation was using an asynchronous (1 GHz) fabric.
+I regret I didn't get a chance to play with that before the pivoted to a conventional fabric.
+hutzlibu 10 months ago
+| parent | prev | next [–]
+What happened with it? Wikipedia is very thin on the details. Did it simply not work out in mass production, or was it not considered worth it anymore as CPU and GPUs advanced?
+FullyFunctional 10 months ago
+| root | parent | next [–]
+My moles claim they simply couldn't get the software to work.
+bcrl 10 months ago
+| root | parent | next [–]
+My understanding is that the hardware turned out to use way more power than expected.
+The whole premise of the design was that the extra registers between logic stages were "free".
+In the real world, pipelining has a significant power cost.
+FullyFunctional 10 months ago
+| root | parent | next [–]
+Are you talking about Achronix?
+Because they certainly did tell me that power was the reason they bailed on their original approach.Space-Time ran hot, but I don’t see why they would be using more flip-flops than with a conventional FPGA.
+Also my sources were pretty clear on the cause of their failure.
+snvzz 10 months ago
+| parent | prev | next [–]
+Note the link is broken becuase the dot needs to be within the URL.
+PaulHoule 10 months ago
+| prev | next [–]
+So many acquisitions end up like this you’d think the shareholders of possible acquiring company might want a “poison pill” or some other mechanism to prevent this kind of merger or maybe the government should make it much much much hardware for companies to merge, mot for the good of the consumer or vendors but for the poor shareholders.
+Aromasin 10 months ago
+| parent | next [–]
+It does feel quite strange. Altera spent the last 7 years getting rid of and merging all their HR/IT/Marketing/Sales/Legal and so on with Intel. All they had that was independent was engineering and planning, and even that wasmt entitely so. They need to start that all from scratch again. The inefficiency of it all astounds me.
+JonChesterfield 10 months ago
+| prev | next [–]
+How do the xilinx and altera systems compare in practice? Learn how FPGAs work is somewhere on my todo list and they seem to be the main two options.
+SilverBirch 10 months ago
+| parent | next [–]
+Xilinx and Altera fundamentally do the same thing to an almost silly extent. There
+are a handful of fundamental building blocks that make up an FPGA, and in every case Xilinx's implementation differs from Altera, but in trivial ways. Altera have an Adaptive Logic module whereas Xilinx have a Configurable Logic Block. They're really just look up tables.So where the rubber meets the road is how good the tooling is and how well they execute on their tapeout. Xilinx has been much better executing their plans since Intel bought Altera.
+Aromasin 10 months ago
+| root | parent | next [–]
+Altera were roadblocked by relying on Intel nodes. Their new product lines (Agilex 9/7/5/3) are excellent however, despite being 3 or 4 years too late to the market. I've been lucky enough to have early access to them. It's going to be an uphill battle for Altera to win back lost business but based on current performance, and looking at AMDs roadmaps, I wouldn't put it past Altera to take the lead again.
+SilverBirch 10 months ago
+| root | parent | next [–]
+Being an independent company is almost certainly going to give them an edge going against Xilinx under AMD - atleast when it comes to the pure FPGA play, and there's been surprisingly little innovation in that area (although I never found out if they actually got hyperflex to work)
+Aromasin 10 months ago
+| root | parent | next [–]
+It's worth investing some time in it now. The tools are a bit more fleshed out along with the documentation, so it's not the pain it once was. It's been a godsend for some image processing work I've been doing of late. The performance improvements have been phenomenal.
+tester756 10 months ago
+| prev | next [–]
+It will hurt them on earnings in 2024?What they gain from it? Is there some deal with TSMC behind the scenes?It seems like TSMC is investing in some Intel's companies IMS and now this
+SilverBirch 10 months ago
+| parent | next [–]
+They’re just dumping the distraction from their core business, the Altera acquisition was one of Bryan krzanich’s many mid-steps, buying and betting instead of running a business.
+dfex 10 months ago
+| prev | next [–]
+Now if they could just set Tofino free as well, we could get back to interesting networking developments...
+asfarley 10 months ago
+| prev [–]
+Hello to Audrey and James
+ShuffleBoard 10 months ago
+| parent [–]
+Hey!
+How did you find me on here lol???Give my luv to the kitt-ehs ~~~~~ and count the biscuits for me too XD
+Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact
+Search:

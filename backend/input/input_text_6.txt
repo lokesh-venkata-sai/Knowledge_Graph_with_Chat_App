@@ -1,0 +1,25 @@
+URL: https://www.crn.com/news/components-peripherals/2024/intel-brings-back-altera-as-standalone-fpga-company
+
+Intel Revives Altera Name For Stand-Alone FPGA Company
+Intel Revives Altera Name For Stand-Alone FPGA Company
+Two months after Intel spun off the Programmable Solutions Group into a stand-alone FPGA company, it reveals it’s taking its original Altera name and chasing a market opportunity exceeding $55 billion across data center, communications and embedded segments.
+What’s old is new again: Intel is reviving the Altera brand for the name of its new stand-alone FPGA company that was previously known as the Programmable Solutions Group.
+The semiconductor giant unveiled the new name for its business concerning FPGAs, short for field-programmable gate arrays, on Thursday, two months after the company separated the Programmable Solutions Group into a wholly owned independent company.
+[Related: 3 Big Points About New Intel Data Center And AI Group Leader Justin Hotard]
+Altera was the original name of the FPGA business Intel acquired for $16.7 billion in 2015, which the chipmaker did at the time to enable “new classes of products in the high-growth data center and Internet of Things market segments.”
+Giving a name to the business was a critical step ahead of Intel’s plan to attract private investment for Altera as soon as this year. The chipmaker’s ultimate goal is to return Altera to the public market through an initial public offering by 2026.
+When Intel unveiled its plan to spin off its FPGA business last fall, it named 23-year Intel veteran Sandra Rivera (pictured), who was general manager of its Data Center and AI Group at the time, as CEO of the stand-alone company. Leading alongside her is 24-year Intel veteran and former channel executive Shannon Poulin as COO.
+As CRN previously reported, the spin-off of Altera serves two purposes: giving Intel extra liquidity to invest in CEO Pat Gelsinger’s expensive comeback plan and expanding the FPGA company’s business opportunities.
+While Intel plans to remain a majority shareholder of Altera, any private or public investment could help the chipmaker further invest in Gelsinger’s plan, which involves a large build-out of new chip factories in the West as well as the introduction of five advanced manufacturing nodes in four years. Both initiatives are well underway.
+The goal of Gelsinger’s plan is to surpass Asian contract chip manufacturing giants TSMC and Samsung Electronics in process performance by 2025. At the same time, the company is hoping its revitalized contract chip-making business, Intel Foundry, will exceed Samsung’s foundry business in revenue by 2030.
+As for Altera, Gelsinger said last fall that its return as a stand-alone company would give it the “the mandate, focus and resources to better capitalize on the attractive expected growth of FPGAs across data center and communications.”
+In addition, company officials said the spinoff would give Altera better resources for expanding into markets for embedded devices and systems that weren’t a focus for Intel, such as industrial, automotive, and aerospace and defense.
+Altera also plans to continue a new focus on low-end and midrange FPGA products in the embedded markets that began in 2021 when the Programmable Solutions Group was folded into Intel’s Data Center and AI Group as part of a broader reorganization.
+In a new statement, Rivera said Altera’s re-established independence is coming at the right time.
+“As customers deal with increasingly complex technological challenges and work to differentiate themselves from their competitors and accelerate time to value, we have an opportunity to reinvigorate the FPGA market,” she said.
+“We’re leading with a bold, agile and customer-obsessed approach to deliver programmable solutions and accessible AI across a broad range of applications in the comms, cloud, data center, embedded, industrial, automotive, and mil-aero market segments.”
+In a Thursday webcast, Altera was expected to unveil its strategy for a market opportunity exceeding $55 billion and an expanded portfolio that includes what it said is the “only FPGA with AI built into the fabric.”
+Among the announcements, the company said the Agilex 9 FPGA, which is now in volume production, has the “industry’s fastest data converters,” making it ideal for “radar and military-aerospace applications that require high-bandwidth mixed-signal FPGAs.
+For high-bandwidth compute applications like data center, networking and defense, there’s the Agilex 7 F-series and I-series, which are now in production, offering two times better fabric performance per watt compared with competing FPGAs, according to Altera.
+The FPGA designer said Agilex 5, which is “now broadly available,” offers the “only FPGA fabric infused with AI, best-in-class performance and 1.6X better performance per watt versus competing products” for embedded and edge applications.
+Coming in the near future is Agilex 3, which will “bring a leading value, low-power line of FPGAs to low-complexity functions for cloud, communications and intelligence edge applications,” according to the company.

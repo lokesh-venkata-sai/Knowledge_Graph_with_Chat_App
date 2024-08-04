@@ -37,13 +37,17 @@ Ollama makes it easy to host any model locally. The Mistral 7B OpenOrca version 
    python main.py
 
 ## Setup React App (Frontend User Interface)
-1. After creating React Application Create .env file in root directory and add 
+1. After creating React Application, Install axios
+   ```sh
+   cd chatbot-react-app
+   npm install axios
+2. Create .env file in root directory and add 
    - set NODE_OPTIONS=--openssl-legacy-provider
-2. Update the start script in your package.json file to include the legacy OpenSSL provider option
+3. Update the start script in your package.json file to include the legacy OpenSSL provider option
    - "scripts": {
          "start": "react-scripts --openssl-legacy-provider start"
          }
-3. Run application
+4. Run application
    - npm start
 
 ## Techstack:

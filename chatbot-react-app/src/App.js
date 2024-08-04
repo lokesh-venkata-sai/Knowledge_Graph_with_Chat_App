@@ -10,7 +10,8 @@ function App() {
     console.log("In button handling");
     e.preventDefault();
     const response = await axios.post('http://localhost:5000/chatbot', { message });
-    setResponses([...responses, { user: message, bot: response.data.response }]);
+    const botResponse = response.data.response || "Couldn't understand. Please give more info?";
+    setResponses([...responses, { user: message, bot: botResponse }]);
     setMessage('');
   };
 

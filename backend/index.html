@@ -1,0 +1,530 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="intel's latest 9-year experiment with making and selling fpgas">intel's latest 9-year experiment with making and selling fpgas</option>
+                                
+                                    <option value="fpga maker altera">fpga maker altera</option>
+                                
+                                    <option value="intel psg">intel psg</option>
+                                
+                                    <option value="altera">altera</option>
+                                
+                                    <option value="intel’s early heterogeneous chiplet technologies and strategies">intel’s early heterogeneous chiplet technologies and strategies</option>
+                                
+                                    <option value="agilex fpga families">agilex fpga families</option>
+                                
+                                    <option value="new fpga company">new fpga company</option>
+                                
+                                    <option value="shannon poulin">shannon poulin</option>
+                                
+                                    <option value="intel's operational independence">intel's operational independence</option>
+                                
+                                    <option value="fpgas">fpgas</option>
+                                
+                                    <option value="data center">data center</option>
+                                
+                                    <option value="margin stacking">margin stacking</option>
+                                
+                                    <option value="xilinx's prices">xilinx's prices</option>
+                                
+                                    <option value="margin stacking argument">margin stacking argument</option>
+                                
+                                    <option value="sacred in semiconductors">sacred in semiconductors</option>
+                                
+                                    <option value="intel">intel</option>
+                                
+                                    <option value="margin-savvy">margin-savvy</option>
+                                
+                                    <option value="dram business">dram business</option>
+                                
+                                    <option value="mcaffee">mcaffee</option>
+                                
+                                    <option value="mobileye">mobileye</option>
+                                
+                                    <option value="psg">psg</option>
+                                
+                                    <option value="ifs">ifs</option>
+                                
+                                    <option value="programmable systems group (altera)">programmable systems group (altera)</option>
+                                
+                                    <option value="xilinx">xilinx</option>
+                                
+                                    <option value="tsmc">tsmc</option>
+                                
+                                    <option value="amd">amd</option>
+                                
+                                    <option value="intel and altera">intel and altera</option>
+                                
+                                    <option value="same group of shareholders">same group of shareholders</option>
+                                
+                                    <option value="arria 10 fpgas">arria 10 fpgas</option>
+                                
+                                    <option value="intel's 20nm finfet node">intel's 20nm finfet node</option>
+                                
+                                    <option value="stratix 10 fpgas">stratix 10 fpgas</option>
+                                
+                                    <option value="intel's 14nm node">intel's 14nm node</option>
+                                
+                                    <option value="intel's 10nm process technology">intel's 10nm process technology</option>
+                                
+                                    <option value="low-end agilex 3 fpgas">low-end agilex 3 fpgas</option>
+                                
+                                    <option value="directrf agilex 9 fpgas">directrf agilex 9 fpgas</option>
+                                
+                                    <option value="agilex fpga architecture">agilex fpga architecture</option>
+                                
+                                    <option value="sandra rivera">sandra rivera</option>
+                                
+                                    <option value="microprocessors">microprocessors</option>
+                                
+                                    <option value="new altera?">new altera?</option>
+                                
+                                    <option value="fpga customers">fpga customers</option>
+                                
+                                    <option value="strong competitor">strong competitor</option>
+                                
+                                    <option value="lattice">lattice</option>
+                                
+                                    <option value="microchip">microchip</option>
+                                
+                                    <option value="intel-altera">intel-altera</option>
+                                
+                                    <option value="amd-xilinx">amd-xilinx</option>
+                                
+                                    <option value="5g ai-enabled sbc">5g ai-enabled sbc</option>
+                                
+                                    <option value="data centers">data centers</option>
+                                
+                                    <option value="effective cooling system">effective cooling system</option>
+                                
+                                    <option value="stepper motors">stepper motors</option>
+                                
+                                    <option value="solutions to drive these motors">solutions to drive these motors</option>
+                                
+                                    <option value="larsen & toubro">larsen & toubro</option>
+                                
+                                    <option value="world's largest fifa stadium">world's largest fifa stadium</option>
+                                
+                                    <option value="world’s tallest statue">world’s tallest statue</option>
+                                
+                                    <option value="one of the world’s most sophisticated cricket stadiums">one of the world’s most sophisticated cricket stadiums</option>
+                                
+                                    <option value="cadence design systems">cadence design systems</option>
+                                
+                                    <option value="reality dc design software">reality dc design software</option>
+                                
+                                    <option value="mouser electronics">mouser electronics</option>
+                                
+                                    <option value="toshiba motor control solutions">toshiba motor control solutions</option>
+                                
+                                    <option value="techfocus media, inc.">techfocus media, inc.</option>
+                                
+                                    <option value="all material on this site">all material on this site</option>
+                                
+                                    <option value="ee journal daily">ee journal daily</option>
+                                
+                                    <option value="subscribe">subscribe</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "intel\u0027s latest 9-year experiment with making and selling fpgas", "label": "intel\u0027s latest 9-year experiment with making and selling fpgas", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "fpga maker altera", "label": "fpga maker altera", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "intel psg", "label": "intel psg", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "altera", "label": "altera", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "intel\u2019s early heterogeneous chiplet technologies and strategies", "label": "intel\u2019s early heterogeneous chiplet technologies and strategies", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "agilex fpga families", "label": "agilex fpga families", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "new fpga company", "label": "new fpga company", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "shannon poulin", "label": "shannon poulin", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "intel\u0027s operational independence", "label": "intel\u0027s operational independence", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "fpgas", "label": "fpgas", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "data center", "label": "data center", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "margin stacking", "label": "margin stacking", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "xilinx\u0027s prices", "label": "xilinx\u0027s prices", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "margin stacking argument", "label": "margin stacking argument", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "sacred in semiconductors", "label": "sacred in semiconductors", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "intel", "label": "intel", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "margin-savvy", "label": "margin-savvy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "dram business", "label": "dram business", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "mcaffee", "label": "mcaffee", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "mobileye", "label": "mobileye", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "psg", "label": "psg", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "ifs", "label": "ifs", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "programmable systems group (altera)", "label": "programmable systems group (altera)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "xilinx", "label": "xilinx", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "tsmc", "label": "tsmc", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "amd", "label": "amd", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "intel and altera", "label": "intel and altera", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "same group of shareholders", "label": "same group of shareholders", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "arria 10 fpgas", "label": "arria 10 fpgas", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "intel\u0027s 20nm finfet node", "label": "intel\u0027s 20nm finfet node", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "stratix 10 fpgas", "label": "stratix 10 fpgas", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "intel\u0027s 14nm node", "label": "intel\u0027s 14nm node", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "intel\u0027s 10nm process technology", "label": "intel\u0027s 10nm process technology", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "low-end agilex 3 fpgas", "label": "low-end agilex 3 fpgas", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "directrf agilex 9 fpgas", "label": "directrf agilex 9 fpgas", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "agilex fpga architecture", "label": "agilex fpga architecture", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "sandra rivera", "label": "sandra rivera", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "microprocessors", "label": "microprocessors", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "new altera?", "label": "new altera?", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "fpga customers", "label": "fpga customers", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "strong competitor", "label": "strong competitor", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "lattice", "label": "lattice", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "microchip", "label": "microchip", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "intel-altera", "label": "intel-altera", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "amd-xilinx", "label": "amd-xilinx", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "5g ai-enabled sbc", "label": "5g ai-enabled sbc", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "data centers", "label": "data centers", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "effective cooling system", "label": "effective cooling system", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "stepper motors", "label": "stepper motors", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "solutions to drive these motors", "label": "solutions to drive these motors", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "larsen \u0026 toubro", "label": "larsen \u0026 toubro", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "world\u0027s largest fifa stadium", "label": "world\u0027s largest fifa stadium", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "world\u2019s tallest statue", "label": "world\u2019s tallest statue", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "one of the world\u2019s most sophisticated cricket stadiums", "label": "one of the world\u2019s most sophisticated cricket stadiums", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "cadence design systems", "label": "cadence design systems", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "reality dc design software", "label": "reality dc design software", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "mouser electronics", "label": "mouser electronics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "toshiba motor control solutions", "label": "toshiba motor control solutions", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "techfocus media, inc.", "label": "techfocus media, inc.", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "all material on this site", "label": "all material on this site", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "ee journal daily", "label": "ee journal daily", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "subscribe", "label": "subscribe", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "intel\u0027s latest 9-year experiment with making and selling fpgas", "title": "In 2013, Altera announced its plan to switch semiconductor foundries from TSMC to Intel. This move marks the end of Intel\u0027s latest 9-year experiment with making and selling FPGAs.", "to": "fpga maker altera", "width": 1}, {"from": "intel psg", "title": "Altera became Intel PSG after Intel acquired it late in 2015.", "to": "altera", "width": 1}, {"from": "intel psg", "title": "Pathfinding Intel\u2019s early heterogeneous chiplet technologies and strategies, including the use of the embedded multi-die interconnect bridge (EMIB) and the Advanced Interface Bus (AIB)", "to": "intel\u2019s early heterogeneous chiplet technologies and strategies", "width": 1}, {"from": "intel psg", "title": "Jumped to the successful Agilex FPGA families, initially made with Intel\u2019s 10nm process technology", "to": "agilex fpga families", "width": 1}, {"from": "intel psg", "title": "During the October 3 announcement, Gelsinger announced that Intel\u2019s PSG will become an independent company focused exclusively on FPGA development, FPGA applications, FPGA marketing, FPGA customers, and FPGA-friendly sales channels. As CEO of the new FPGA company, Sandra Rivera will be looking for growth, higher profits, alternative sales channels, and the ability to create derivative FPGAs more quickly using Intel\u2019s chiplet technologies and manufacturing might.", "to": "new fpga company", "width": 1}, {"from": "intel psg", "title": "Currently a corporate VP and General Manager of Intel PSG, will become the new company\u2019s COO.", "to": "shannon poulin", "width": 1}, {"from": "intel psg", "title": "For Intel PSG, the return to operational independence may be a welcome breath of fresh air. This spinout is not the first time that Intel has exited the programmable logic business, as they sold their EPLD business to Altera in the late 1980s to focus more on microprocessors.", "to": "intel\u0027s operational independence", "width": 1}, {"from": "intel psg", "title": "Intel continued to operate as a microprocessor company after acquiring Altera in 2015. From a revenue perspective, FPGAs represent a small portion of Intel\u2019s sales and get little corporate marketing attention.", "to": "fpgas", "width": 1}, {"from": "intel psg", "title": "Nearly everything that Intel offers is framed as a Xeon helper.", "to": "data center", "width": 1}, {"from": "margin stacking", "title": "Since Xilinx has to pay TSMC for chips, and then add their own margin to the price, there are two companies worth of margins in Xilinx\u2019s prices. However, with Altera and Intel becoming one company after Intel acquired Altera, they don\u0027t have two companies\u2019 worth of margins to deal with, and they could potentially drop prices.", "to": "xilinx\u0027s prices", "width": 1}, {"from": "margin stacking argument", "title": "In semiconductor manufacturing, maintaining healthy margins is considered sacred as it contributes significantly to profitability. The margin stacking argument in this context seems less convincing upon closer examination.", "to": "sacred in semiconductors", "width": 1}, {"from": "intel", "title": "Intel is known for its prudent approach towards managing margins, a trait that is highly valued in the semiconductor industry.", "to": "margin-savvy", "width": 1}, {"from": "intel", "title": "Invented commercial DRAMs and brought in so much revenue that Intel founders Gordon Moore and Andy Grove were quite skeptical of the microprocessor\u2019s importance to the company. However, the Intel 8088 microprocessor\u2019s success in the IBM PC market coupled with fierce Japanese competition in the DRAM arena caused Moore and Grove to pivot in 1985. That year, Intel dumped its DRAM business and became the microprocessor company we know today.", "to": "dram business", "width": 1}, {"from": "intel", "title": "Acquired security software maker McAffee in 2014 and sold it via a private buyout seven years later.", "to": "mcaffee", "width": 1}, {"from": "intel", "title": "Agreed to acquire autonomous driving specialist Mobileye in 2017 and spun the company back out in an IPO in 2022.", "to": "mobileye", "width": 1}, {"from": "intel", "title": "Plans to spin out PSG as a wholly owned and independent company on January 1, 2024, then to add an investment partner to the deal \u2018fairly rapidly\u2019, and to conduct an IPO for the new FPGA company within two or three years.", "to": "psg", "width": 1}, {"from": "intel", "title": "Exposes more shareholder value for Intel by spinning off the Programmable Systems Group (Altera) as an independent company, immediately gaining a new external customer for IFS.", "to": "ifs", "width": 1}, {"from": "intel", "title": "Intel spins off the Programmable Systems Group (Altera)", "to": "programmable systems group (altera)", "width": 1}, {"from": "intel", "title": "Intel -= Altera;", "to": "altera", "width": 1}, {"from": "xilinx", "title": "Both Xilinx and TSMC face similar challenges regarding margins as they operate in the lucrative semiconductor technology sector.", "to": "tsmc", "width": 1}, {"from": "xilinx", "title": "AMD buys Xilinx", "to": "amd", "width": 1}, {"from": "intel and altera", "title": "Putting both operations under the same ownership does not significantly change the fact that each entity still needs to earn a profit by managing margins.", "to": "same group of shareholders", "width": 1}, {"from": "arria 10 fpgas", "title": "Initially had trouble taping out Arria 10 FPGAs in Intel\u2019s 20nm FinFET node", "to": "intel\u0027s 20nm finfet node", "width": 1}, {"from": "stratix 10 fpgas", "title": "Fared much better at the 14nm node", "to": "intel\u0027s 14nm node", "width": 1}, {"from": "agilex fpga families", "title": "Initially made with Intel\u2019s 10nm process technology", "to": "intel\u0027s 10nm process technology", "width": 1}, {"from": "agilex fpga families", "title": "Expanding the Agilex FPGA family portfolio", "to": "low-end agilex 3 fpgas", "width": 1}, {"from": "directrf agilex 9 fpgas", "title": "Seems to plan on stretching the Agilex FPGA architecture from low-end Agilex 3 FPGAs to stratospheric DirectRF Agilex 9 FPGAs", "to": "agilex fpga architecture", "width": 1}, {"from": "sandra rivera", "title": "Rivera said that as CEO of the new FPGA company, she\u2019ll be looking for growth, higher profits, alternative sales channels, and the ability to create derivative FPGAs more quickly using Intel\u2019s chiplet technologies and manufacturing might.", "to": "new fpga company", "width": 1}, {"from": "fpgas", "title": "However, those sorts of embedded applications in aerospace, military, industrial, and automotive markets don\u2019t dovetail well with Intel\u2019s intense marketing focus on data center, PC, and X86 microprocessor stories. FPGAs make excellent companions to microprocessors.", "to": "microprocessors", "width": 1}, {"from": "psg", "title": "Wins back independence needed to compete in the FPGA arena by being spun off from Intel, while retaining the manufacturing might of IFS.", "to": "new altera?", "width": 1}, {"from": "fpga customers", "title": "Gains a strong competitor back in the fight to keep other FPGA players in check due to spin-off of Programmable Systems Group (Altera) from Intel.", "to": "strong competitor", "width": 1}, {"from": "lattice", "title": "May lose market share in low-end and mid-range segments due to distracting influence of Intel corporate marketing\u0027s narrow Xeon-centric focus.", "to": "microchip", "width": 1}, {"from": "intel-altera", "title": "Software developer\u0027s interpretation: Intel += Altera; AMD += Xilinx;", "to": "amd-xilinx", "width": 1}, {"from": "intel-altera", "title": "This powerful credit-card-sized, single board computer (SBC) with cellular connectivity and a neural processor for AI/ML workloads is available for pre-order on Kickstarter. It is related to Intel-Altera because it showcases Intel\u0027s AI technology and is part of the company\u0027s 5G strategy.", "to": "5g ai-enabled sbc", "width": 1}, {"from": "data centers", "title": "Larsen \u0026 Toubro, a company known for building large structures such as stadiums, has ventured into designing data centers. Since IT equipment in data centers generates heat, an efficient and effective cooling system is crucial. Cadence Reality DC Design Software is used by Larsen \u0026 Toubro to simulate and analyze the cooling system.", "to": "effective cooling system", "width": 1}, {"from": "stepper motors", "title": "In Chalk Talk, Amelia Dalton and Doug Day from Toshiba examine the different types of stepper motors and how Toshiba\u2019s motor control solutions, such as active gain control and ADMD, can make a difference in designs.", "to": "solutions to drive these motors", "width": 1}, {"from": "larsen \u0026 toubro", "title": "Larsen \u0026 Toubro built the world\u2019s largest FIFA stadium in Qatar.", "to": "world\u0027s largest fifa stadium", "width": 1}, {"from": "larsen \u0026 toubro", "title": "Larsen \u0026 Toubro also built the world\u2019s tallest statue.", "to": "world\u2019s tallest statue", "width": 1}, {"from": "larsen \u0026 toubro", "title": "Larsen \u0026 Toubro constructed one of the world\u2019s most advanced cricket stadiums as well.", "to": "one of the world\u2019s most sophisticated cricket stadiums", "width": 1}, {"from": "cadence design systems", "title": "Cadence Design Systems is sponsoring and being used by Larsen \u0026 Toubro to simulate and analyze the cooling system for their new data center venture.", "to": "reality dc design software", "width": 1}, {"from": "mouser electronics", "title": "Mouser Electronics is sponsoring and examining stepper motors and Toshiba\u2019s motor control solutions, which can add value to electronic designs.", "to": "toshiba motor control solutions", "width": 1}, {"from": "techfocus media, inc.", "title": "techfocus media, inc. Owns all rights to the material presented on their website.", "to": "all material on this site", "width": 1}, {"from": "ee journal daily", "title": "The user can subscribe to EE Journal Daily through the given link.", "to": "subscribe", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.015,
+            "damping": 0.4,
+            "gravitationalConstant": -31,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

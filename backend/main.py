@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from scrape_data import search_and_extract_text
-from build_graph import build_graph
+from build_graph import build_graph, load_data
+from query import get_answer
 app = Flask(__name__)
 
 CORS(app)
@@ -10,7 +11,8 @@ CORS(app)
 def chatbot():
     data = request.json
     message = data.get('message')
-    response = generate_response_test(message)
+    response = get_answer(message)
+    print(response)
     return jsonify({'response': response})
 
 
@@ -18,9 +20,10 @@ def chatbot():
 def build_kg():
     topic = request.args.get('topic')
     urls = search_and_extract_text(topic, num_results=1) #scraping
-    result = build_graph() # Building Knowledge Graph
+    df = load_data()
+    result = build_graph(df) # Building Knowledge Graph
     if result:
-        return "Built Knowledge Graph using these sources"
+        return "Built Knowledge Graph"
     else:
         return "Couldn't Build knowledge Graph"
 

@@ -7,7 +7,7 @@ from pathlib import Path
 from helpers.df_helpers import documents2Dataframe
 from helpers.df_helpers import df2Graph, graph2Df
 import networkx as nx
-from helpers.prompts import graphPrompt, graphPrompt1
+from pyvis.network import Network
 
 
 inputdirectory = Path(f"./input")
@@ -66,8 +66,30 @@ def contextual_proximity(df: pd.DataFrame) -> pd.DataFrame:
     dfg2["edge"] = "contextual proximity"
     return dfg2
 
-def build_graph():
-    df = load_data()
+def visualize_graph(G):
+    graph_output_directory = "./index.html"
+
+    net = Network(
+        notebook=False,
+        # bgcolor="#1a1a1a",
+        cdn_resources="remote",
+        height="900px",
+        width="100%",
+        select_menu=True,
+        # font_color="#cccccc",
+        filter_menu=False,
+    )
+
+    net.from_nx(G)
+    # net.repulsion(node_distance=150, spring_length=400)
+    net.force_atlas_2based(central_gravity=0.015, gravity=-31)
+    # net.barnes_hut(gravity=-18100, central_gravity=5.05, spring_length=380)
+    net.show_buttons(filter_=["physics"])
+
+    net.write_html(graph_output_directory, notebook=False)
+    print("Visualization stored at: ", graph_output_directory)
+
+def build_graph(df):
     dfg = generate_graph_data(df)
     nodes = pd.concat([dfg['node_1'], dfg['node_2']], axis=0).unique()
     G = nx.Graph()
@@ -91,4 +113,6 @@ def build_graph():
     top_level_communities = next(communities_generator)
     next_level_communities = next(communities_generator)
     communities = sorted(map(sorted, next_level_communities))
-    return True
+
+    visualize_graph(G)
+    return G

@@ -13,3 +13,9 @@ yachalk==0.1.6
 tqdm==4.66.5
 unstructured==0.15.0
 python-magic-bin==0.4.14
+transformers==4.43.3
+scikit-learn
+torch==2.4.0
+torchvision==2.4.0
+torchaudio==2.4.0
+pyvis==0.3.2

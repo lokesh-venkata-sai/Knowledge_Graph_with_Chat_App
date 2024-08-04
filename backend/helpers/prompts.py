@@ -91,6 +91,7 @@ def graphPrompt1(input: str, metadata={}, model="mistral-openorca:latest"):
             "\tFormat your output as a JSON object with two keys: 'entities' and 'user_intent'.\n"
             "\tThe 'entities' key should contain a list of the key terms from the query.\n"
             "\tThe 'user_intent' key should contain a what the user is asking for in 1-3 words that are present in user query.\n"
+            "\tDon't give any explanation.\n"
         "Example output:\n"
             "{\n"
             '   "entities": [\n'
@@ -101,8 +102,13 @@ def graphPrompt1(input: str, metadata={}, model="mistral-openorca:latest"):
             "}"
     )
 
+    print(input)
     USER_PROMPT = f"context: ```{input}``` \n\n output: "
     response, _ = client.generate(model_name=model, system=SYS_PROMPT, prompt=USER_PROMPT)
+    print("\n-----\n")
+    response = response.split("}")[0]
+    response = response + "}"
+    print(response)
     try:
         result = json.loads(response)
         # result = [dict(item, **metadata) for item in result]

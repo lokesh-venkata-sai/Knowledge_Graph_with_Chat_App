@@ -21,7 +21,7 @@ def build_kg():
     topic = request.args.get('topic')
     urls = search_and_extract_text(topic, num_results=1) #scraping
     df = load_data()
-    result = build_graph(df) # Building Knowledge Graph
+    result = build_graph(df, regenerate=False) # Building Knowledge Graph
     if result:
         return "Built Knowledge Graph"
     else:

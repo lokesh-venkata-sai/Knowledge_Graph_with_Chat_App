@@ -73,6 +73,6 @@ def handle_query_with_kg(G, query, query_info):
 def get_answer(query):
     query_info = graphPrompt1(query, {}, model='zephyr:latest')
     print(query_info)
-    G = build_graph(None)
+    G = build_graph(None, False)
     answer = handle_query_with_kg(G, query, query_info)
     return answer

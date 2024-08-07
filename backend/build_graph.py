@@ -89,8 +89,8 @@ def visualize_graph(G):
     net.write_html(graph_output_directory, notebook=False)
     print("Visualization stored at: ", graph_output_directory)
 
-def build_graph(df):
-    dfg = generate_graph_data(df)
+def build_graph(df, visualize=True, regenerate=False):
+    dfg = generate_graph_data(df, regenerate=regenerate)
     nodes = pd.concat([dfg['node_1'], dfg['node_2']], axis=0).unique()
     G = nx.Graph()
 
@@ -114,5 +114,6 @@ def build_graph(df):
     next_level_communities = next(communities_generator)
     communities = sorted(map(sorted, next_level_communities))
 
-    visualize_graph(G)
+    if visualize:
+        visualize_graph(G)
     return G
